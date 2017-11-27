@@ -47,6 +47,12 @@ main {
   text-align: justify;
 }
 
+#buttons button,
+form input,
+form textarea {
+  color: black;
+}
+
 @media (max-width: 1000px) {
   .jumbotron .container {
     max-width: 800px;

@@ -18,12 +18,12 @@ $(document).ready(function() {
     var button = target.getAttribute('id');
     whereAmI = `#${button +1}`;
     if (whereIWas == null) {
-      $('#aboutme').css({ "color": baseButtonColor,"background-color": buttonBGColorDefault });
+      $('#aboutme').css({ "color": baseButtonColor, "background-color": buttonBGColorDefault });
       $('#aboutme1').hide('slow');
     }
-    $(`#${button}`).css({ "color": buttonColor,"background-color": buttonBGColor });
+    $(`#${button}`).css({ "color": buttonColor, "background-color": buttonBGColor });
     $(`${whereAmI}`).show('slow');
-    $(`#${whereIWasButton}`).css({ "color": baseButtonColor,"background-color": buttonBGColorDefault });
+    $(`#${whereIWasButton}`).css({ "color": baseButtonColor, "background-color": buttonBGColorDefault });
     $(`${whereIWas}`).hide('slow');
     whereIWas = whereAmI;
     whereIWasButton = button;
@@ -37,13 +37,13 @@ $(document).ready(function() {
         whereAmI = '#aboutme1';
         counter = 0;
         $(`${whereAmI}`).show('slow');
-        $(`${button}`).css({ "color": baseButtonColor,"background-color": buttonBGColorDefault});
+        $(`${button}`).css({ "color": baseButtonColor, "background-color": buttonBGColorDefault });
         return;
       }
       $(`${whereAmI}`).hide('slow');
-      $(`${button}`).css({ "color": baseButtonColor,"background-color": buttonBGColorDefault});
+      $(`${button}`).css({ "color": baseButtonColor, "background-color": buttonBGColorDefault });
       $(`${whereAmI}`).next().show('slow');
-      $(`${button}`).next().css({ "color": buttonColor,"background-color": buttonBGColor });
+      $(`${button}`).next().css({ "color": buttonColor, "background-color": buttonBGColor });
       whereAmI = $(`${whereAmI}`).next()[0].id;
       whereAmI = '#' + whereAmI;
       counter++;
@@ -51,15 +51,15 @@ $(document).ready(function() {
       if (counter === navigationNum) {
         $(`${whereAmI}`).hide('slow');
         whereAmI = '#cotactg1';
-        counter = navigationNum-1;
+        counter = navigationNum - 1;
         $(`${whereAmI}`).show('slow');
-        $(`${button}`).css({ "color": baseButtonColor,"background-color": buttonBGColorDefault});
+        $(`${button}`).css({ "color": baseButtonColor, "background-color": buttonBGColorDefault });
         return;
       }
       $(`${whereAmI}`).hide('slow');
-      $(`${button}`).css({ "color": baseButtonColor,"background-color": buttonBGColorDefault});
+      $(`${button}`).css({ "color": baseButtonColor, "background-color": buttonBGColorDefault });
       $(`${whereAmI}`).prev().show('slow');
-      $(`${button}`).prev().css({ "color": buttonColor,"background-color": buttonBGColor });
+      $(`${button}`).prev().css({ "color": buttonColor, "background-color": buttonBGColor });
 
       whereAmI = $(`${whereAmI}`).prev()[0].id;
       whereAmI = '#' + whereAmI;
@@ -69,5 +69,32 @@ $(document).ready(function() {
       }
 
     }
+  });
+
+//for fullview
+
+  $('#submit').on('click', function() {
+    const userName = $('#realname').val();
+    const userEmail = $('#email').val();
+    const userComment = $('#comment').val();
+    $.post('http://35.156.88.18:3050/contacts', {
+      studentaccount: 'escatman@gmail.com',
+      name: userName,
+      email: userEmail,
+      text: userComment,
+    });
+  });
+
+  $("#json").click(function() {
+    $.get("http://35.156.88.18:3050/contacts?studentaccount=escatman@gmail.com", function(data) {
+      $.each(data, (index, userData) => {
+        $('form').append(`
+        <h1>User: ${userData.name}</h1>
+        <h3>This is your data</h3>
+        <p>Email: ${userData.email}</p>
+        <p>Text: ${userData.text}</p>`);
+      });
+      
+    });
   });
 });
